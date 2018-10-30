@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Taken Pictures</string>
+
+    <string name="app_action_valid">Image enregistrée.</string>
+    <string name="app_action_cancel">Image supprimée.</string>
+    <string name="app_action_retry">Vous pouvez essayer à nouveau.</string>
+    <string name="app_text_picture1">Photo 1</string>
+    <string name="app_text_picture2">Photo 2</string>
+
+</resources>
