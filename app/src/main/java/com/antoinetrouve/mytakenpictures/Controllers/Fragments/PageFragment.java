@@ -72,13 +72,12 @@ public class PageFragment extends Fragment implements View.OnClickListener {
         boolean isLastPicture = getArguments().getBoolean(KEY_IS_LAST_PICTURE);
 
         // If picture is the last one, available sending action
-        if (isLastPicture == true){
+        if (isLastPicture == true ){
+            Log.e(getClass().getSimpleName(), "onCreateView last picture " + String.valueOf(isLastPicture));
             FloatingActionButton sendButton = result.findViewById(R.id.fragment_page_send_button);
             sendButton.setVisibility(View.VISIBLE);
             sendButton.setOnClickListener(this);
         }
-
-        Log.e(getClass().getSimpleName(), "onCreateView called page fragment current "+ position);
 
         // Update the view
         imageView.setImageBitmap(bitmap);
@@ -111,4 +110,5 @@ public class PageFragment extends Fragment implements View.OnClickListener {
         // Spread the click to the parent activity
         mCallback.onButtonClicked(view);
     }
+
 }

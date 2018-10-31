@@ -7,8 +7,11 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-    <!-- Add permission to use Network -->
+    <!-- Add permission to open Network sockets -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Add permission to access information about networks -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
