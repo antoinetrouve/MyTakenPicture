@@ -29,44 +29,40 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /** @var REQUEST_IMAGE_CAPTURE the requets image state */
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final String TAG_PICTURES = "pictures";
+
+    /** @var PICTURES_KEY The bundle key to save pictures */
+    static final String PICTURES_KEY = "pictures";
+
+    /** Text for button action */
     static final String PICTURE_OK = "Ok";
     static final String PICTURE_CANCEL = "Annuler";
 
-    // View elements
+    /** View elements */
     private ImageView imageView;
     private Button pictureOneButton;
     private Button pictureTwoButton;
     private FloatingActionButton cameraButton;
 
-    // total pictures taken
+    /** @var picturesDone total pictures taken */
     private int picturesDone = 0;
 
-    // the picture in process
+    /** @var pictureCurrent The picture in process */
     private Bitmap pictureCurrent;
 
-    // the pictures taken and validate
+    /** @var pictures The pictures list which are validate */
     ArrayList<Bitmap> pictures;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         pictures = new ArrayList<>();
+        this.configureView();
 
-        // Set button Action
-        pictureOneButton = findViewById(R.id.button_picture_1);
-        pictureOneButton.setEnabled(true);
-        pictureTwoButton = findViewById(R.id.button_picture_2);
-        pictureTwoButton.setEnabled(false);
-
-        cameraButton     = findViewById(R.id.camera_button);
-
-        // Set ImageView
-        imageView        = findViewById(R.id.taken_picture_image);
-
-        // take picture
+        // Active click event
         cameraButton.setOnClickListener(this);
         pictureOneButton.setOnClickListener(this);
         pictureTwoButton.setOnClickListener(this);
@@ -93,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // Save picture
                     this.pictures.add(this.pictureCurrent);
 
-                    // init view
+                    // init view to validate the picture
                     pictureOneButton.setText(getResources().getText(R.string.app_text_picture1));
                     pictureTwoButton.setText(getResources().getText(R.string.app_text_picture2));
                     pictureTwoButton.setBackgroundColor(getResources().getColor(R.color.colorNormalBtn));
@@ -101,20 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     cameraButton.setVisibility(View.VISIBLE);
 
                     if (this.picturesDone == 1) {
-                        // valid picture
-//                        pictureOneButton.setBackgroundColor(Color.GREEN);
-//                        pictureOneButton.setEnabled(false);
-
-                        // Keep safe the picture
-//                        this.pictures.add(this.pictureCurrent);
-
-                        // init view
-//                        pictureOneButton.setText(getResources().getText(R.string.app_text_picture1));
-//                        pictureTwoButton.setText(getResources().getText(R.string.app_text_picture2));
-//                        pictureTwoButton.setBackgroundColor(getResources().getColor(R.color.colorNormalBtn));
-//                        imageView.setImageResource(R.drawable.stamp);
-//                        cameraButton.setVisibility(View.VISIBLE);
-
                         //active the second action for picture 2
                         pictureTwoButton.setEnabled(true);
 
@@ -125,20 +107,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         ).setAction("Action", null).show();
 
                     } else if (this.picturesDone == 2){
-                        // valid picture 1
-//                        pictureOneButton.setBackgroundColor(Color.GREEN);
-//                        pictureOneButton.setEnabled(false);
-
                         // valid picture 2
                         pictureTwoButton.setBackgroundColor(Color.GREEN);
                         pictureTwoButton.setEnabled(false);
-//                        this.pictures.add(this.pictureCurrent);
-
-                        // init view
-//                        pictureOneButton.setText(getResources().getText(R.string.app_text_picture1));
-//                        pictureTwoButton.setText(getResources().getText(R.string.app_text_picture2));
-//                        imageView.setImageResource(R.drawable.stamp);
-//                        cameraButton.setVisibility(View.VISIBLE);
 
                         Snackbar.make(
                                 view,
@@ -152,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // init display view when all pictures has been taken
                     if (this.pictures.size() == 2) {
                         Intent intent = new Intent(this, DisplayActivity.class);
-                        intent.putParcelableArrayListExtra(TAG_PICTURES, this.pictures);
+                        intent.putParcelableArrayListExtra(PICTURES_KEY, this.pictures);
                         startActivity(intent);
                     }
                 }
@@ -215,34 +186,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             // Set image view
             cameraButton.setVisibility(View.GONE);
-            //imageView.setImageBitmap(imageBitmap);
             imageView.setImageBitmap(stampedImage);
 
             // config view
             pictureOneButton.setText(PICTURE_OK);
             pictureTwoButton.setText(PICTURE_CANCEL);
+
             // Active the cancel action button
             pictureTwoButton.setEnabled(true);
             pictureTwoButton.setBackgroundColor(getResources().getColor(R.color.colorCancelBtn));
 
             // Resolve action
-//            if (picturesDone == 1){
-                // Active the cancel action button
-//                pictureTwoButton.setEnabled(true);
-//                pictureOneButton.setText(PICTURE_OK);
-//                pictureOneButton.setBackgroundColor(getResources().getColor(R.color.colorNormalBtn));
-//                pictureTwoButton.setText(PICTURE_CANCEL);
-//            }
-
             if (picturesDone == 2){
                 // Active the valide action button
                 pictureOneButton.setEnabled(true);
                 pictureOneButton.setBackgroundColor(getResources().getColor(R.color.colorNormalBtn));
-//                pictureTwoButton.setText(PICTURE_CANCEL);
             }
         }
     }
 
+    /**
+     * Configure the view on start activity
+     */
+    private void configureView(){
+        // Set button Action
+        pictureOneButton = findViewById(R.id.button_picture_1);
+        pictureOneButton.setEnabled(true);
+        pictureTwoButton = findViewById(R.id.button_picture_2);
+        pictureTwoButton.setEnabled(false);
+        cameraButton = findViewById(R.id.camera_button);
+
+        // Set ImageView
+        imageView = findViewById(R.id.taken_picture_image);
+    }
+
+    /**
+     * Apply Stamp on picture
+     * @param bitmapSource
+     * @return Bitmap stamped
+     */
     private Bitmap ApplyStamp(Bitmap bitmapSource){
         Log.e(getClass().getSimpleName(), "Apply stamp - START");
 

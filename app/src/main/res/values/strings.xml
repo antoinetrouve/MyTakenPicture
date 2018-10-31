@@ -6,5 +6,6 @@
     <string name="app_action_retry">Vous pouvez essayer à nouveau.</string>
     <string name="app_text_picture1">Photo 1</string>
     <string name="app_text_picture2">Photo 2</string>
+    <string name="app_text_send">Images envoyés</string>
 
 </resources>

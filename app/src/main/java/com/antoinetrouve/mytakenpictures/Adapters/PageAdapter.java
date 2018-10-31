@@ -11,14 +11,15 @@ import com.antoinetrouve.mytakenpictures.Controllers.Fragments.PageFragment;
 import java.util.ArrayList;
 
 /**
- * Created by DEV on 29/10/2018.
+ * @author Antoine Trouvé
  */
 
 public class PageAdapter extends FragmentPagerAdapter{
 
-    // colors array that will be passed to PageFragment
-    // private int[] colors;
+    /** @var ArrayList<Bitmap> The list of Bitmaps will be passed to PageFragment */
     private ArrayList<Bitmap> bitmaps;
+
+    /** @var boolean true if is the last picture is processing */
     private boolean lastPicture = false;
 
     /**
@@ -29,11 +30,18 @@ public class PageAdapter extends FragmentPagerAdapter{
     public PageAdapter(FragmentManager fm, ArrayList<Bitmap> bitmaps) {
         super(fm);
         this.bitmaps = bitmaps;
-        Log.e(getClass().getSimpleName(), "pageAdapter called : "+ this.bitmaps.size());
+
+        // For debug purpose
+        Log.d(
+            getClass().getSimpleName(),
+            "pageAdapter called with total Bitmap to process: " + this.bitmaps.size()
+        );
     }
 
     @Override
     public Fragment getItem(int position) {
+
+        // If last picture is processing
         if (this.getCount() -1 == position) {
             lastPicture = true;
         }
