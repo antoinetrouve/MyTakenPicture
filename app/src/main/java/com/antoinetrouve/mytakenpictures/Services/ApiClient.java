@@ -34,7 +34,7 @@ public class ApiClient {
     public static final String IMAGES_DETAILS_PART_KEY = "imagesDetails";
 
     /** @var API_KEY the API key to resquet API */
-    public static final String API_KEY = "Rqe1YSr96q8eLoK0eOCE83MW8Tz2Ybz9PtvbYHzd";
+    public static final String API_KEY = "XXXXXXXX";
 
     private static Retrofit retrofit;
 
