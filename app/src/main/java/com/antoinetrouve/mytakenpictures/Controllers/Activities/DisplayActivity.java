@@ -1,10 +1,7 @@
 package com.antoinetrouve.mytakenpictures.Controllers.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
